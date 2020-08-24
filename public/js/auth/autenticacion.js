@@ -1,19 +1,25 @@
 class Autenticacion {
   autEmailPass (email, password) {
-    //$('#avatar').attr('src', 'imagenes/usuario_auth.png')
-    //Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
-    //$('.modal').modal('close')
-   
+    firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
+      if(result.user.emailVerified){
+        Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
+        $('#avatar').attr('src', 'imagenes/usuario_auth.png')
+      } else {
+        firebase.auth().signOut()
+        Materialize.toast(`Realizar verificacion de cuenta primero`, 5000) 
+      }
+    })
+    $('.modal').modal('close')
   }
   crearCuentaEmailPass (email, password, nombres) {
-    firebase.auth().createUserWithEmailAndPassword(email, password);
-      .then(resutl => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(result => {
         result.user.updateProfile({
           displayName: nombres
         })
         
         const configuracion = {
-          url : 'http://localhost:3000/'
+          url: 'http://localhost:3000/'
         }
         result.user.sendEmailVerification(configuracion).catch(error => {
           console.log(error)
