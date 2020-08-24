@@ -21,7 +21,7 @@ $(() => {
 
     $("#authGoogle").click(() => objAuth.authCuentaGoogle());
 
-    //$("#authTwitter").click(() => //AUTH con Twitter);
+    $("#authFB").click(() => objAuth.authCuentaFacebook());
 
     $('#btnRegistrarse').click(() => {
         $('#modalSesion').modal('close');
