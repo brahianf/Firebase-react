@@ -39,9 +39,18 @@ class Autenticacion {
   }
 
   authCuentaGoogle () {
-    //$('#avatar').attr('src', result.user.photoURL)
-    //$('.modal').modal('close')
-    //Materialize.toast(`Bienvenido ${result.user.displayName} !! `, 4000)
+    const provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(provider)
+    .then(result => {
+      $('#avatar').attr('src', result.user.photoURL)
+      $('.modal').modal('close')
+      Materialize.toast(`Bienvenido ${result.user.displayName} !! `, 4000)
+    })
+    .catch(error => {
+      console.log(error);
+      Materialize.toast(`Problema de autenticacion google ${error} !! `, 4000)
+    })
+    
   }
 
   authCuentaFacebook () {
